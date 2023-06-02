@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 5 Exercise</title>
+</head>
+
+<body>
+    <form>
+        <div>
+            <label for="num1">Choose the 1st number to insert the calcuator:</label>
+            <input type="number" name="num1" id="num1">
+        </div>
+        <div>
+            <label for="num2">Choose the 2nd number to insert the calcuator:</label>
+            <input type="number" name="num2" id="num2">
+        </div>
+        <div>
+            <legend>Choose operator</legend>
+            <input type="radio" name="operator" id="plus" value="plus">
+            <label for="plus">+</label>
+            <input type="radio" name="operator" id="minus" value="minus">
+            <label for="plus">-</label>
+            <input type="radio" name="operator" id="multiply" value="multiply">
+            <label for="plus">x</label>
+            <input type="radio" name="operator" id="divide" value="divide">
+            <label for="plus">/</label>
+        </div>
+        <input id="submit" type="submit" value="Start Calculating">
+    </form>
+    <div>Result: <span id="result"></span></div>
+    <script>
+        let form = document.querySelector("form");
+        let result = document.querySelector("#result");
+
+        function calcuator(event) {
+            event.preventDefault();
+            let num1 = form.querySelector("#num1").value;
+            let num2 = form.querySelector("#num2").value;
+            let operator = form.querySelector("input[name=operator]:checked").value;
+
+            fetch(`/calculator/${operator}?num1=${num1}&num2=${num2}`)
+                .then(response => response.json())
+                .then(data => result.innerText = data.result)
+        }
+
+        form.addEventListener("submit", calcuator);
+    </script>
+</body>
+
+</html>
